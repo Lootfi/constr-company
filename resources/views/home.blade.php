@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    &#x1F9D1; {{ucfirst($user->name)}} You are logged in!
                 </div>
             </div>
         </div>
