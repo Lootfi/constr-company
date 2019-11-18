@@ -14,7 +14,11 @@ class CreateProduitsTable extends Migration
     public function up()
     {
         Schema::create('produits', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('code');
+            $table->string('designation', 200);
+            $table->float('prix_unitaire')->nullable()->default(0.1);
+            $table->set('unite_mesure', ['mètre', 'kilogram', 'litre']);
+            $table->boolean('disponible');
             $table->timestamps();
         });
     }
