@@ -1,0 +1,11 @@
+.modify {
+    border: 0.5px solid rgba(78, 115, 223, 0.5);
+    color: rgb(78, 115, 223);
+    border-radius: 5%;
+}
+
+.supprimer {
+    border: 0.5px solid rgba(198, 67, 49, 0.5);
+    color: #c64331;
+    border-radius: 5%;
+}

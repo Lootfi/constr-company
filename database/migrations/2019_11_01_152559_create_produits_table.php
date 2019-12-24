@@ -13,12 +13,12 @@ class CreateProduitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('produits', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('code');
             $table->string('designation', 200);
             $table->float('prix_unitaire')->nullable()->default(0.1);
             $table->set('unite_mesure', ['mètre', 'kilogram', 'litre']);
-            $table->boolean('disponible');
+            $table->unsignedInteger('quantité')->nullable();
             $table->timestamps();
         });
     }

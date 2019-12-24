@@ -10,20 +10,21 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('bootstrap/js/jquery-3.4.1.min.js') }}" defer></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" defer></script>
-    <script src="{{ asset('bootstrap/js/sb-admin-2.js')}}"></script>
+    {{-- <script src="{{ asset('bootstrap/js/jquery/jquery.min.js') }}" defer></script> --}}
+    {{-- <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}" defer></script> --}}
+    {{-- <script src="{{ asset('bootstrap/js/sb-admin-2.js')}}"></script> --}}
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <script src="https://kit.fontawesome.com/af4ade9aaa.js" crossorigin="anonymous"></script>
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Styles -->
     <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{asset('datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{ asset('bootstrap/css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('bootstrap/css/fa-all.min.css') }}">
-    <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+    <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 
 </head>
 
@@ -48,7 +49,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{route('home')}}">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
+          <span>Acceuil</span></a>
       </li>
 
       <!-- Divider -->
@@ -99,8 +100,14 @@
                 <a class="collapse-item" href="utilities-border.html">Borders</a>
                     @break
                 @case("Gestionnaire")
-                  <a class="collapse-item" href="{{ route('add-client') }}">Ajouter client</a>
-                  <a class="collapse-item" href="{{ route('add-produit') }}">Ajouter Produit</a>
+                  <h6 class="collapse-header">Ajouter</h6>
+                  <a class="collapse-item" href="{{ route('clients.create') }}">Ajouter client</a>
+                  <a class="collapse-item" href="{{ route('add-fournisseur') }}">Ajouter Fournisseur</a>
+                  <a class="collapse-item" href="{{ route('produits.create') }}">Ajouter Produit</a>
+                  <h6 class="collapse-header">Modifier</h6>
+                  <a class="collapse-item" href="{{ route('clients.index') }}">Modifier Clients</a>
+                  <a class="collapse-item" href="{{ route('produits.index') }}">Modifier Produits</a>
+
                     @break
                 @default  
             @endswitch
@@ -355,5 +362,25 @@
         @yield('content')
     </main>
   </div>
+
+  <script src="{{asset('bootstrap/js/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{asset('bootstrap/js/jquery.easing.min.js')}}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{{asset('bootstrap/js/sb-admin-2.min.js')}}"></script>
+
+  <!-- Page level plugins -->
+  <script src="{{asset('datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script>
+    $(document).ready(function() {
+    $('#dataTable1').DataTable();
+    $('#dataTable2').DataTable();
+    });
+</script>
+  @yield('page-script')
 </body>
 </html>

@@ -15,11 +15,18 @@
 
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/add-client', 'GestionnaireController@indexClient')->name('add-client');
-Route::post('/add-client', 'GestionnaireController@addClient');
-Route::get('/add-produit', 'GestionnaireController@indexProduit')->name('add-produit');
-Route::post('/add-produit', 'GestionnaireController@addProduit');
-// Route::post('add-gest', 'AdminController@addGest');
+
+//GESTIONNAIRE PAGES
+// Route::resource('clients', 'GestionnaireController@indexListClients');
+Route::resource('clients', 'ClientController');
+Route::resource('produits', 'ProduitController');
+Route::resource('fournisseurs', 'FournisseurController');
+
+Route::get('/add-fournisseur', 'GestionnaireController@indexFournisseur')->name('add-fournisseur');
+Route::post('/add-fournisseur', 'GestionnaireController@addFournisseur');
+// Route::get('/add-produit', 'GestionnaireController@indexProduit')->name('add-produit');
+// Route::post('/add-produit', 'GestionnaireController@addProduit');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');

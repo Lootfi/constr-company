@@ -4,14 +4,14 @@
 {{ $success =  Session::get('success',false)}}
     <div class="container">
         <div class="card">
-            <div class="card-header">ADD CLIENT</div>
+            <div class="card-header">ADD FOURNISSEUR</div>
             <div class="card-body">
                @if ($success)
                <div class="alert alert-success">
-                    Client Ajouté !
+                    Fournisseur Ajouté !
                 </div>
                @endif
-                    <form method="POST" action="{{ route('clients.store') }}">
+                    <form method="POST" action="{{ route('add-fournisseur') }}">
                             @csrf
         
                             <div class="form-group row">
@@ -130,9 +130,9 @@
         
                                 <div class="col-md-6">
                                     <select class="custom-select" name="role" id="role">
+                                        <option value="Fournisseur">Fournisseur</option>
                                         <option value="Client">Client</option>
                                         <option value="Administrateur">Administrateur</option>
-                                        <option value="Fournisseur">Fournisseur</option>
                                         <option value="Gestionnaire">Gestionnaire</option>
                                     </select>
                                 </div>
@@ -141,7 +141,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Ajouter Client') }}
+                                        {{ __('Ajouter Fournisseur') }}
                                     </button>
                                 </div>
                             </div>
