@@ -1,6 +1,12 @@
+.info {
+    border: 0.5px solid rgba(105, 139, 240, 0.5);
+    color: rgb(106, 139, 239);
+    border-radius: 5%;
+}
+
 .modify {
-    border: 0.5px solid rgba(78, 115, 223, 0.5);
-    color: rgb(78, 115, 223);
+    border: 0.5px solid rgba(26, 76, 228, 0.5);
+    color: rgb(19, 70, 224);
     border-radius: 5%;
 }
 

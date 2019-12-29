@@ -24,13 +24,13 @@
                         @endif
                     </td>
                     <td>
-                            {{-- <a href="produits/{{$produit['code']}}/edit"><button type="button" class="modify">Modifier</button></a> --}}
-    
-                            <button type="button" class="modify" data-toggle="modal" data-target="{{'#modal'.$produit['code']}}">
+
+                        <a href="#"><button class="btn btn-outline-primary btn-sm">Page</button></a>
+                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="{{'#modal'.$produit['code']}}">
                                     Modifier
                             </button>
 
-                            <form style="display:inline" method="POST" action="{{ route('produits.destroy',$produit['code']) }}"> @method('DELETE') @csrf <button type="submit" class="supprimer">Supprimer</button></form>
+                            <form style="display:inline" method="POST" action="{{ route('produits.destroy',$produit['code']) }}"> @method('DELETE') @csrf <button type="submit" class="btn btn-outline-danger btn-sm">Supprimer</button></form>
                     </td>
                 </tr>
 
@@ -54,6 +54,27 @@
                         <form action="{{route('produits.update',$produit['code'])}}" method="post">
                                 @csrf
                                 @method('PUT')
+
+
+                                <div class="form-group row">
+                                    <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
+                    
+                                    <div class="col-md-6">
+                                        <div class="custom-file">
+                                            <input id="image" type="file" accept="image/png, image/jpeg" aria-describedby="inputGroupFileAddon01" class="custom-file-input form-control @error('image') is-invalid @enderror" name="image" autocomplete="image" >
+                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                          </div>
+                                        @error('image')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+
                                 <div class="form-group row">
                                     <label for="designation" class="col-md-4 col-form-label text-md-right">{{ __('designation') }}</label>
                     
@@ -73,8 +94,7 @@
                                         <label for="prix_unitaire" class="col-md-4 col-form-label text-md-right">{{ __('prix_unitaire') }}</label>
                     
                                         <div class="col-md-6">
-                                            <input id="prix_unitaire" type="number" class="form-control @error('prix_unitaire') is-invalid @enderror" name="prix_unitaire" value="{{ $produit['prix_unitaire'] }}" required autocomplete="prix_unitaire" autofocus>
-                    
+                                            <input id="prix_unitaire" type="number" min="1" class="form-control @error('prix_unitaire') is-invalid @enderror" name="prix_unitaire" value="{{ $produit['prix_unitaire'] }}" required autocomplete="prix_unitaire" autofocus>
                                             @error('prix_unitaire')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -100,7 +120,7 @@
                                         <label for="quantité" class="col-md-4 col-form-label text-md-right">{{ __('quantité') }}</label>
                         
                                         <div class="col-md-6">
-                                            <input id="quantité" type="number" class="form-control @error('quantité') is-invalid @enderror" name="quantité" value="{{ $produit['quantité'] }}" required autocomplete="quantité">
+                                            <input id="quantité" type="number" min="0" class="form-control @error('quantité') is-invalid @enderror" name="quantité" value="{{ $produit['quantité'] }}" required autocomplete="quantité">
                         
                                             @error('quantité')
                                                 <span class="invalid-feedback" role="alert">

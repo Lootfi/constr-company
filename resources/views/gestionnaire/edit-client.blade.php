@@ -124,3 +124,11 @@
             
     </div>
 @endsection
+
+@section('page-script')
+    <script>    
+        $('.modal').on('shown.bs.modal', function () {
+            $('.modify').trigger('focus')
+        })
+    </script>
+@endsection

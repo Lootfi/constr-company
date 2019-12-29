@@ -17,7 +17,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = User::all(['id', 'nom', 'prenom', 'email', 'role'])->where('role', 'Client')->toArray();
+        $clients = User::all()->where('role', 'Client')->toArray();
         return view('gestionnaire.clients-list')->with('clients', $clients);
     }
 
@@ -63,7 +63,9 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        //
+        $client = User::find($id);
+
+        return view('client.profile')->with('client', $client);
     }
 
     /**
