@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ImageUploadService;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,15 @@ use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
+
+    protected $imageUploader;
+
+
+    public function __construct(ImageUploadService $imageUploader)
+    {
+        $this->imageUploader = $imageUploader;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +28,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = User::all()->where('role', 'Client')->toArray();
-        return view('gestionnaire.clients-list')->with('clients', $clients);
+        return view('gestionnaire.clients.list')->with('clients', $clients);
     }
 
     /**
@@ -28,7 +38,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('gestionnaire.add-client')->with('success', null);
+        return view('gestionnaire.clients.add')->with('success', null);
     }
 
     /**
@@ -41,18 +51,20 @@ class ClientController extends Controller
     {
         $data = $request->all();
         $this->validator($data)->validate();
-
+        $img = $this->imageUploader->store($request, 'user_images');
         User::create([
             'nom' => $data['nom'],
             'prenom' => $data['prenom'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'ville' => $data['ville'],
+            'image' => $img['imgName'],
+            'imageSize' => $img['imgSize'],
             'num_tel' => $data['num_tel'],
             'role' => $data['role']
         ]);
 
-        return redirect()->route('add-client')->with('success', true);
+        return redirect()->route('clients.index')->with('success', true);
     }
 
     /**
@@ -65,7 +77,7 @@ class ClientController extends Controller
     {
         $client = User::find($id);
 
-        return view('client.profile')->with('client', $client);
+        return view('gestionnaire.clients.show')->with('client', $client);
     }
 
     /**
@@ -77,7 +89,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = User::where('id', $id)->get()->toArray()[0];
-        return view('gestionnaire.edit-client')->with('client', $client);
+        return view('gestionnaire.clients.edit')->with('client', $client);
     }
 
     /**

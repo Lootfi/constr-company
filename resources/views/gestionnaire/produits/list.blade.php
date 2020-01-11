@@ -25,7 +25,7 @@
                     </td>
                     <td>
 
-                        <a href="#"><button class="btn btn-outline-primary btn-sm">Page</button></a>
+                        <a href="{{ route('produits.show',$produit['code']) }}"><button class="btn btn-outline-primary btn-sm">Info</button></a>
                             <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="{{'#modal'.$produit['code']}}">
                                     Modifier
                             </button>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="modal-body">
                   
-                        <form action="{{route('produits.update',$produit['code'])}}" method="post">
+                        <form action="{{route('produits.update',$produit['code'])}}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 

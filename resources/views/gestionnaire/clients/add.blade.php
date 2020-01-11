@@ -15,6 +15,22 @@
                             @csrf
         
                             <div class="form-group row">
+                                <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Avatar') }}</label>
+                
+                                <div class="col-md-6">
+                                    <div class="custom-file">
+                                        <input id="avatar" type="file" accept="image/png, image/jpeg" aria-describedby="inputGroupFileAddon01" class="custom-file-input form-control @error('avatar') is-invalid @enderror" name="avatar" autocomplete="avatar" >
+                                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                      </div>
+                                    @error('avatar')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="nom" class="col-md-4 col-form-label text-md-right">{{ __('nom') }}</label>
         
                                 <div class="col-md-6">

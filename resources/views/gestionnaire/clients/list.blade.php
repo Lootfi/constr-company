@@ -18,7 +18,7 @@
                     <td>{{$client['prenom']}}</td>
                     <td>{{$client['email']}}</td>
                     <td>
-                        <a href="#"><button class="btn btn-outline-primary btn-sm">Profile</button></a>
+                        <a href="{{ route('clients.show',$client['id']) }}"><button class="btn btn-outline-primary btn-sm">Profile</button></a>
                         <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="{{'#modal'.$client['id']}}">Modifier</button>
                         <form style="display:inline" method="POST" action="{{ route('clients.destroy',$client['id']) }}"> @method('DELETE') @csrf <button type="submit" class="btn btn-outline-danger btn-sm">Supprimer</button></form>
                     </td>
@@ -35,7 +35,7 @@
                         </div>
                         <div class="modal-body">
                         
-                            <form method="POST" action="{{ route('clients.update',$client['id']) }}">
+                            <form method="POST" action="{{ route('clients.update',$client['id']) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group row">

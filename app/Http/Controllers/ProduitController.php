@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Services\ImageUploadService;
 
 class ProduitController extends Controller
 {
+    protected $imageUploader;
+
+    public function __construct(ImageUploadService $imageUploader)
+    {
+        $this->imageUploader = $imageUploader;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +24,7 @@ class ProduitController extends Controller
     {
 
         $produits = Product::all()->toArray();
-        return view('gestionnaire.produits-list')->with('produits', $produits);
+        return view('gestionnaire.produits.list')->with('produits', $produits);
     }
 
     /**
@@ -27,7 +34,7 @@ class ProduitController extends Controller
      */
     public function create()
     {
-        return view('gestionnaire.add-produit')->with('success', null);
+        return view('gestionnaire.produits.add')->with('success', null);
     }
 
     /**
@@ -44,15 +51,19 @@ class ProduitController extends Controller
             'designation' => ['required', 'string', 'unique:products', 'max:100'],
             'prix_unitaire' => ['required', 'numeric', 'min:0.1'],
             'unite_mesure' => ['required', 'string'],
-            'quantité' => ['required', 'integer', 'min:0']
+            'quantité' => ['required', 'integer', 'min:0'],
+            'image' => ['image', 'nullable', 'max:1999']
         ])->validate();
+        $img = $this->imageUploader->store($request, 'product_images')->all();
         Product::create([
             'designation' => $data['designation'],
             'prix_unitaire' => $data['prix_unitaire'],
             'unite_mesure' => $data['unite_mesure'],
-            'quantité' => $data['quantité']
+            'quantité' => $data['quantité'],
+            'image' => $img['imgName'],
+            'imageSize' => $img['imgSize']
         ]);
-        return redirect()->route('produits.create')->with('success', true);
+        return redirect()->route('produits.index')->with('success', true);
     }
 
     /**
@@ -61,9 +72,10 @@ class ProduitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($code)
     {
-        //
+        $produit = Product::find($code);
+        return view('gestionnaire.produits.show')->with('produit', $produit);
     }
 
     /**
@@ -75,7 +87,7 @@ class ProduitController extends Controller
     public function edit($code)
     {
         $produit = Product::where('code', $code)->get()->toArray()[0];
-        return view('gestionnaire.edit-produit')->with('produit', $produit);
+        return view('gestionnaire.produit.edit')->with('produit', $produit);
     }
 
     /**
@@ -92,6 +104,11 @@ class ProduitController extends Controller
         $prod->prix_unitaire = $request['prix_unitaire'];
         $prod->unite_mesure = $request['unite_mesure'];
         $prod->quantité = $request['quantité'];
+
+        $img = $this->imageUploader->store($request, 'product_images')->all();
+        $prod->image = $img['imgName'];
+        $prod->imageSize = $img['imgSize'];
+
         $prod->save();
         return redirect('/produits');
     }
